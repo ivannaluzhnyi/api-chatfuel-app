@@ -51,12 +51,12 @@ const prepareDataToSend = response => {
         attachment: {
           type: 'template',
           payload: {
-            template_type: 'generic',
-            image_aspect_ratio: 'square',
+            template_type: 'list',
+            top_element_style: 'large',
             elements: [
               {
                 title: 'Chatfuel Rockets Jersey',
-                image_url: 'https://rockets.chatfuel.com/assets/shirt.jpg',
+                image_url: 'http://rockets.chatfuel.com/assets/shirt.jpg',
                 subtitle: 'Size: M',
                 buttons: [
                   {
@@ -68,7 +68,7 @@ const prepareDataToSend = response => {
               },
               {
                 title: 'Chatfuel Rockets Jersey',
-                image_url: 'https://rockets.chatfuel.com/assets/shirt.jpg',
+                image_url: 'http://rockets.chatfuel.com/assets/shirt.jpg',
                 subtitle: 'Size: L',
                 default_action: {
                   type: 'web_url',
