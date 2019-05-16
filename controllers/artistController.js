@@ -8,7 +8,7 @@ exports.sendArtistsByName = (req, res) => {
     });
 };
 
-const prepareDataToSend = data => {
+const prepareDataToSend = response => {
   const prepare = {
     messages: [
       {
@@ -24,11 +24,11 @@ const prepareDataToSend = data => {
     ]
   };
 
-  if (data.error) {
-    return data.error;
+  if (response.error) {
+    return response.error;
   }
 
-  data.data.forEach(item => {
+  response.data.forEach(item => {
     prepare.messages[0].attachment.payload.elements.push({
       title: item.name,
       image_url: item.picture_xl,

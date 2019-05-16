@@ -6,7 +6,8 @@ exports.sendAlbumByName = (req, res) => {
     .then(response => {
       return res.send(prepareDataToSend(response));
       // return res.send(response);
-    });
+    })
+    .catch(err => new Error(err));
 };
 
 const prepareDataToSend = response => {
