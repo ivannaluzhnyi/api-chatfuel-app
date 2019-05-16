@@ -4,7 +4,19 @@ exports.sendGifByName = (req, res) => {
   return fetchJsonGiphy(req.query.q, '5')
     .then(data => data.json())
     .then(response => {
-      return res.json(prepareDataToSend(response));
+      // return res.json(prepareDataToSend(response));
+      return res.json({
+        messages: [
+          {
+            attachment: {
+              type: 'image',
+              payload: {
+                url: 'https://rockets.chatfuel.com/assets/welcome.png'
+              }
+            }
+          }
+        ]
+      });
       // return res.send(response);
     })
     .catch(err => {
@@ -12,6 +24,10 @@ exports.sendGifByName = (req, res) => {
     });
 };
 
+/**
+ *
+ * @param {Rsponse} response
+ */
 const prepareDataToSend = response => {
   const prepare = {
     messages: [

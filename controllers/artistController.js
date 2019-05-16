@@ -4,7 +4,7 @@ exports.sendArtistsByName = (req, res) => {
   return fetchJson('https://api.deezer.com/search/artist?q=' + req.query.q)
     .then(data => data.json())
     .then(response => {
-      return res.send(prepareDataToSend(response));
+      return res.json(prepareDataToSend(response));
     });
 };
 
