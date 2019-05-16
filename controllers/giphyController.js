@@ -51,17 +51,30 @@ const prepareDataToSend = response => {
         attachment: {
           type: 'template',
           payload: {
-            template_type: 'media',
+            template_type: 'generic',
+            image_aspect_ratio: 'square',
             elements: [
               {
-                media_type: 'image',
-                url:
-                  'https://www.facebook.com/chatfuelrockets/photos/1087668107975064'
+                title: 'Chatfuel Rockets Jersey',
+                image_url: 'https://rockets.chatfuel.com/assets/shirt.jpg',
+                subtitle: 'Size: M'
               },
               {
-                media_type: 'image',
-                url:
-                  'https://www.facebook.com/chatfuelrockets/photos/1087668107975064'
+                title: 'Chatfuel Rockets Jersey',
+                image_url: 'https://rockets.chatfuel.com/assets/shirt.jpg',
+                subtitle: 'Size: L',
+                default_action: {
+                  type: 'web_url',
+                  url: 'https://rockets.chatfuel.com/store',
+                  messenger_extensions: true
+                },
+                buttons: [
+                  {
+                    type: 'web_url',
+                    url: 'https://rockets.chatfuel.com/store',
+                    title: 'View Item'
+                  }
+                ]
               }
             ]
           }
