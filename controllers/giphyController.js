@@ -57,7 +57,14 @@ const prepareDataToSend = response => {
               {
                 title: 'Chatfuel Rockets Jersey',
                 image_url: 'https://rockets.chatfuel.com/assets/shirt.jpg',
-                subtitle: 'Size: M'
+                subtitle: 'Size: M',
+                buttons: [
+                  {
+                    type: 'web_url',
+                    url: 'https://rockets.chatfuel.com/store',
+                    title: 'View Item'
+                  }
+                ]
               },
               {
                 title: 'Chatfuel Rockets Jersey',
