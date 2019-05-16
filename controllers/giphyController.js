@@ -4,19 +4,7 @@ exports.sendGifByName = (req, res) => {
   return fetchJsonGiphy(req.query.q, '5')
     .then(data => data.json())
     .then(response => {
-      // return res.json(prepareDataToSend(response));
-      return res.json({
-        messages: [
-          {
-            attachment: {
-              type: 'image',
-              payload: {
-                url: 'https://rockets.chatfuel.com/assets/welcome.png'
-              }
-            }
-          }
-        ]
-      });
+      return res.json(prepareDataToSend(response));
       // return res.send(response);
     })
     .catch(err => {
@@ -55,7 +43,42 @@ const prepareDataToSend = response => {
     });
   });
 
-  return prepare;
+  // return prepare;
+
+  return {
+    messages: [
+      {
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'media',
+            elements: [
+              {
+                media_type: 'image',
+                url:
+                  'https://www.facebook.com/chatfuelrockets/photos/1087668107975064',
+                buttons: [
+                  {
+                    title: 'Go to Chatfuel!',
+                    type: 'web_url',
+                    url: 'https://chatfuel.com/'
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        quick_replies: [
+          {
+            title: "That's cool!",
+            set_attributes: {
+              feedback: 'Cool!'
+            }
+          }
+        ]
+      }
+    ]
+  };
 };
 
 // const t = {
