@@ -56,26 +56,16 @@ const prepareDataToSend = response => {
               {
                 media_type: 'image',
                 url:
-                  'https://www.facebook.com/chatfuelrockets/photos/1087668107975064',
-                buttons: [
-                  {
-                    title: 'Go to Chatfuel!',
-                    type: 'web_url',
-                    url: 'https://chatfuel.com/'
-                  }
-                ]
+                  'https://www.facebook.com/chatfuelrockets/photos/1087668107975064'
+              },
+              {
+                media_type: 'image',
+                url:
+                  'https://www.facebook.com/chatfuelrockets/photos/1087668107975064'
               }
             ]
           }
-        },
-        quick_replies: [
-          {
-            title: "That's cool!",
-            set_attributes: {
-              feedback: 'Cool!'
-            }
-          }
-        ]
+        }
       }
     ]
   };
