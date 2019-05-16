@@ -4,7 +4,7 @@ exports.sendGifByName = (req, res) => {
   return fetchJsonGiphy(req.query.q, '5')
     .then(data => data.json())
     .then(response => {
-      return res.send(prepareDataToSend(response));
+      return res.json(prepareDataToSend(response));
       // return res.send(response);
     })
     .catch(err => {
