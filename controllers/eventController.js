@@ -5,7 +5,7 @@ exports.sendEventsLocationClient = (req, res) => {
     // console.log(resp)
     let prepare = {};
 
-    if (response.resultsPage.status !== 'error') {
+    if (response.resultsPage.status === 'ok') {
       prepare = {
         messages: [
           {
@@ -14,7 +14,7 @@ exports.sendEventsLocationClient = (req, res) => {
             }`
           },
           {
-            text: `location latitude: ${
+            text: `test if work: ${
               response.resultsPage.results.event[0].displayName
             }`
           }
