@@ -1,4 +1,5 @@
 const fetchJsonSongkick = require('../services/call-api-songkick');
+const { getFormattedDate } = require('../utils/helper');
 
 exports.sendEventsLocationClient = (req, res) => {
   const prepareDataToSend = response => {
@@ -6,17 +7,22 @@ exports.sendEventsLocationClient = (req, res) => {
 
     if (response.resultsPage.status === 'ok') {
       prepare = {
-        messages: [
-          {
-            text: `location latitude: ${req.query.latitude} `
-          },
-          {
-            text: `test if work: ${
-              response.resultsPage.results.event[0].displayName
-            }`
-          }
-        ]
+        messages: []
       };
+
+      response.resultsPage.results.event.forEach(event => {
+        let artists = '';
+        event.performance.forEach(element => {
+          artist = artist + ' ' + element.displayName + '\n';
+        });
+
+        prepare.messages.push({
+          text: `${event.type} - ${event.displayName} \n
+            le ${getFormattedDate(event.start.date)}  \n
+            Artistes: ${artists}      
+          `
+        });
+      });
     } else {
       prepare = {
         messages: [
