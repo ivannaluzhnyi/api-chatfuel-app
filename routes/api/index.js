@@ -5,6 +5,8 @@ router.use('/artist', require('./artist'));
 router.use('/album', require('./album'));
 router.use('/playlist', require('./playlist'));
 
+router.use('/events', require('./event'));
+
 router.use('/gif', require('./giphy'));
 
 router.use(function(err, req, res, next) {
