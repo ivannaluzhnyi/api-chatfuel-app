@@ -14,7 +14,9 @@ exports.sendEventsLocationClient = (req, res) => {
 };
 
 exports.sendUpcomingEventsByArtistName = (req, res) => {
-  return fetchJsonSongkick(`events.json?artist_name=${req.query.q}`)
+  return fetchJsonSongkick(
+    `events.json?artist_name=${req.query.artist_search_events}`
+  )
     .then(data => data.json())
     .then(response => {
       return res.json(prepareDataToSend(response));
