@@ -13,10 +13,6 @@ function fetchJsonSongkick(url_q) {
     },
     options.headers
   );
-  console.log(
-    'test ==+> ',
-    `https://api.songkick.com/api/3.0/${url_q}&apikey=${API_KEY}`
-  );
 
   return fetch(
     `https://api.songkick.com/api/3.0/${url_q}&apikey=${API_KEY}`,
