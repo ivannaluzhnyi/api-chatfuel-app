@@ -11,15 +11,13 @@ exports.sendEventsLocationClient = (req, res) => {
       };
 
       response.resultsPage.results.event.forEach(event => {
-        let artists = '';
-        event.performance.forEach(element => {
-          artists = artists + ' ' + element.displayName + '\n';
-        });
-
+        const artists = prepareArtist(event.performance);
         prepare.messages.push({
-          text: `${event.type} - ${event.displayName} \n
-            le ${getFormattedDate(event.start.date)}  \n
-            Artistes: ${artists}      
+          text: `${event.type} - ${event.displayName} \n le ${getFormattedDate(
+            event.start.date
+          )}  \n à ${event.venue.displayName}, ${
+            event.location.city
+          } \n Artistes: ${artists}      
           `
         });
       });
@@ -57,6 +55,14 @@ exports.sendUpcomingEventsByArtistName = (req, res) => {
     .then(response => {
       return res.json(prepareDataToSend(response));
     });
+};
+
+const prepareArtist = arr => {
+  let artists = '';
+  arr.forEach(element => {
+    artists = artists + ' ' + element.displayName + '\n';
+  });
+  return artists;
 };
 
 // const t = {
