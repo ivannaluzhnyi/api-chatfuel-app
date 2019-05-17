@@ -13,7 +13,7 @@ exports.sendEventsLocationClient = (req, res) => {
       response.resultsPage.results.event.forEach(event => {
         let artists = '';
         event.performance.forEach(element => {
-          artist = artist + ' ' + element.displayName + '\n';
+          artists = artists + ' ' + element.displayName + '\n';
         });
 
         prepare.messages.push({
