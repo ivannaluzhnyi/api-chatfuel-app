@@ -29,7 +29,7 @@ exports.sendEventsLocationClient = (req, res) => {
       };
     }
 
-    return { test: req.body };
+    return prepare;
   };
 
   return fetchJsonSongkick(
