@@ -9,8 +9,7 @@ exports.sendEventsLocationClient = (req, res) => {
       prepare = {
         messages: [
           {
-            text: `location latitude: ${req.query.latitude}, longitude: ${
-              req.query.longitude
+            text: `location latitude: ${req.body.latitude},
             }`
           },
           {
@@ -34,7 +33,7 @@ exports.sendEventsLocationClient = (req, res) => {
   };
 
   return fetchJsonSongkick(
-    `events.json?location=geo:${req.query.latitude},${req.query.longitude}`
+    `events.json?location=geo:${req.body.latitude},${req.body.longitude}`
   )
     .then(data => data.json())
     .then(response => {
