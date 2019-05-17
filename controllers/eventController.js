@@ -2,38 +2,6 @@ const fetchJsonSongkick = require('../services/call-api-songkick');
 const { getFormattedDate } = require('../utils/helper');
 
 exports.sendEventsLocationClient = (req, res) => {
-  const prepareDataToSend = response => {
-    let prepare = {};
-
-    if (response.resultsPage.status === 'ok') {
-      prepare = {
-        messages: []
-      };
-
-      response.resultsPage.results.event.forEach(event => {
-        const artists = prepareArtist(event.performance);
-        prepare.messages.push({
-          text: `${event.type} - ${event.displayName} \n le ${getFormattedDate(
-            event.start.date
-          )}  \n à ${event.venue.displayName}, ${
-            event.location.city
-          } \n Artistes: ${artists}      
-          `
-        });
-      });
-    } else {
-      prepare = {
-        messages: [
-          {
-            text: 'Service indisponible...'
-          }
-        ]
-      };
-    }
-
-    return prepare;
-  };
-
   return fetchJsonSongkick(
     `events.json?location=geo:${req.query.latitude},${
       req.query.longitude
@@ -46,15 +14,43 @@ exports.sendEventsLocationClient = (req, res) => {
 };
 
 exports.sendUpcomingEventsByArtistName = (req, res) => {
-  const prepareDataToSend = response => {
-    return response;
-  };
-
   return fetchJsonSongkick(`events.json?artist_name=${req.query.q}`)
     .then(data => data.json())
     .then(response => {
       return res.json(prepareDataToSend(response));
     });
+};
+
+const prepareDataToSend = response => {
+  let prepare = {};
+
+  if (response.resultsPage.status === 'ok') {
+    prepare = {
+      messages: []
+    };
+
+    response.resultsPage.results.event.forEach(event => {
+      const artists = prepareArtist(event.performance);
+      prepare.messages.push({
+        text: `${event.type} - ${event.displayName} \n le ${getFormattedDate(
+          event.start.date
+        )}  \n à ${event.venue.displayName}, ${
+          event.location.city
+        } \n Artistes: ${artists}      
+        `
+      });
+    });
+  } else {
+    prepare = {
+      messages: [
+        {
+          text: 'Service indisponible...'
+        }
+      ]
+    };
+  }
+
+  return prepare;
 };
 
 const prepareArtist = arr => {
