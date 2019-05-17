@@ -8,6 +8,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./routes/index'));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); //
+app.use(bodyParser.urlencoded({ extended: false })); //
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
