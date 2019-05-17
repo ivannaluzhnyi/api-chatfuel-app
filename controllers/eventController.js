@@ -2,14 +2,13 @@ const fetchJsonSongkick = require('../services/call-api-songkick');
 
 exports.sendEventsLocationClient = (req, res) => {
   const prepareDataToSend = response => {
-    console.log(req.body);
     let prepare = {};
 
     if (response.resultsPage.status === 'ok') {
       prepare = {
         messages: [
           {
-            text: `location latitude: ${req.body.latitude} `
+            text: `location latitude: ${req.query.latitude} `
           },
           {
             text: `test if work: ${
@@ -32,7 +31,7 @@ exports.sendEventsLocationClient = (req, res) => {
   };
 
   return fetchJsonSongkick(
-    `events.json?location=geo:${req.body.latitude},${req.body.longitude}`
+    `events.json?location=geo:${req.query.latitude},${req.query.longitude}`
   )
     .then(data => data.json())
     .then(response => {
