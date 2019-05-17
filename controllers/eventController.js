@@ -2,44 +2,22 @@ const fetchJsonSongkick = require('../services/call-api-songkick');
 
 exports.sendEventsLocationClient = (req, res) => {
   const prepareDataToSend = response => {
-    const prepare = {
+    const pepare = {
       messages: [
+        { text: `location latitude: ${req.query.latitude}` },
         {
-          attachment: {
-            type: 'template',
-            payload: {
-              template_type: 'generic',
-              image_aspect_ratio: 'square',
-              elements: []
-            }
-          }
+          text: `location latitude: ${
+            response.resultsPage.results.event[0].displayName
+          }`
         }
       ]
     };
-
-    if (response.error) {
-      return response.error;
-    }
-
-    // response.data.forEach(item => {
-    //   prepare.messages[0].attachment.payload.elements.push({
-    //     title: item.name,
-    //     image_url: item.picture_xl,
-    //     subtitle: 'Size: M',
-    //     buttons: [
-    //       {
-    //         type: 'web_url',
-    //         url: item.link,
-    //         title: 'Voir le playlist sur deezer'
-    //       }
-    //     ]
-    //   });
-    // });
-
-    return response;
+    return pepare;
   };
 
-  return fetchJsonSongkick('events.json?location=clientip')
+  return fetchJsonSongkick(
+    `/events.json?location=geo:${req.query.latitude},${req.query.longitude}`
+  )
     .then(data => data.json())
     .then(response => {
       return res.json(prepareDataToSend(response));
