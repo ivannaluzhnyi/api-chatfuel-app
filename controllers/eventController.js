@@ -2,21 +2,39 @@ const fetchJsonSongkick = require('../services/call-api-songkick');
 
 exports.sendEventsLocationClient = (req, res) => {
   const prepareDataToSend = response => {
-    const pepare = {
-      messages: [
-        { text: `location latitude: ${req.query.latitude}` },
-        {
-          text: `location latitude: ${
-            response.resultsPage.results.event[0].displayName
-          }`
-        }
-      ]
-    };
-    return pepare;
+    // console.log(resp)
+    let prepare = {};
+
+    if (response.resultsPage.status !== 'error') {
+      prepare = {
+        messages: [
+          {
+            text: `location latitude: ${req.query.latitude}, longitude: ${
+              req.query.longitude
+            }`
+          },
+          {
+            text: `location latitude: ${
+              response.resultsPage.results.event[0].displayName
+            }`
+          }
+        ]
+      };
+    } else {
+      prepare = {
+        messages: [
+          {
+            text: 'Service indisponible...'
+          }
+        ]
+      };
+    }
+
+    return prepare;
   };
 
   return fetchJsonSongkick(
-    `/events.json?location=geo:${req.query.latitude},${req.query.longitude}`
+    `events.json?location=geo:${req.query.latitude},${req.query.longitude}`
   )
     .then(data => data.json())
     .then(response => {
