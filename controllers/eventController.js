@@ -42,6 +42,16 @@ const prepareDataToSend = response => {
         `
       });
     });
+
+    if (response.resultsPage.results.event.length === 0) {
+      prepare = {
+        messages: [
+          {
+            text: "Pas d'évenement ... "
+          }
+        ]
+      };
+    }
   } else {
     prepare = {
       messages: [
