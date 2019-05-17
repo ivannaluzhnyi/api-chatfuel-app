@@ -31,7 +31,9 @@ exports.sendEventsLocationClient = (req, res) => {
   };
 
   return fetchJsonSongkick(
-    `events.json?location=geo:${req.query.latitude},${req.query.longitude}`
+    `events.json?location=geo:${req.query.latitude},${
+      req.query.longitude
+    }&per_page=${req.query.per_page}`
   )
     .then(data => data.json())
     .then(response => {
