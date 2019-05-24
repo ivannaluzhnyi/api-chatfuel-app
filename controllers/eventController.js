@@ -34,11 +34,11 @@ const prepareDataToSend = response => {
     response.resultsPage.results.event.forEach(event => {
       const artists = prepareArtist(event.performance);
       prepare.messages.push({
-        text: `<b>${event.type} - ${
+        text: `_*${event.type} - ${
           event.displayName
-        }</b>\n📅 le ${getFormattedDate(event.start.date)}  \n🗺️ à <address>${
+        }*_,\n📅 le ${getFormattedDate(event.start.date)}  \n🗺️ à ${
           event.venue.displayName
-        }</address>, ${event.location.city} \nArtistes: \n${artists}      
+        }, ${event.location.city} \nArtistes: \n${artists}      
         `
       });
     });
