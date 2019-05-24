@@ -34,11 +34,11 @@ const prepareDataToSend = response => {
     response.resultsPage.results.event.forEach(event => {
       const artists = prepareArtist(event.performance);
       prepare.messages.push({
-        text: `${event.type} - ${event.displayName} \n le ${getFormattedDate(
-          event.start.date
-        )}  \n à ${event.venue.displayName}, ${
-          event.location.city
-        } \n Artistes: \n ${artists}      
+        text: `<b>${event.type} - ${
+          event.displayName
+        }</b>\n📅 le ${getFormattedDate(event.start.date)}  \n🗺️ à <address>${
+          event.venue.displayName
+        }</address>, ${event.location.city} \nArtistes: \n${artists}      
         `
       });
     });
@@ -47,7 +47,7 @@ const prepareDataToSend = response => {
       prepare = {
         messages: [
           {
-            text: "Pas d'évenement ... "
+            text: "Pas d'événement ... "
           }
         ]
       };
@@ -68,7 +68,7 @@ const prepareDataToSend = response => {
 const prepareArtist = arr => {
   let artists = '';
   arr.forEach(element => {
-    artists = artists + ' ' + element.displayName + '\n';
+    artists = artists + ' - ' + element.displayName + '\n';
   });
   return artists;
 };
