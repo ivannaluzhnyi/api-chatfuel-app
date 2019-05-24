@@ -1,6 +1,6 @@
 var router = require('express').Router();
 
-router.use('/test', require('./test'));
+router.use('/', require('./test'));
 router.use('/artist', require('./artist'));
 router.use('/album', require('./album'));
 router.use('/playlist', require('./playlist'));
