@@ -38,7 +38,7 @@ const prepareDataToSend = response => {
           event.start.date
         )}  \n à ${event.venue.displayName}, ${
           event.location.city
-        } \n Artistes: ${artists}      
+        } \n Artistes: \n ${artists}      
         `
       });
     });
