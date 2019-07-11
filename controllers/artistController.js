@@ -54,28 +54,27 @@ exports.sendArtistsByName = (req, res) => {
 
     // return prepare;
     return {
-      "messages": [
+      "messages":[
         {
-          "attachment": {
-            "type": "template",
-            "payload": {
-              "template_type": "button",
-              "text": "Hello!",
-              "buttons": [
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"generic",
+              "elements":[
                 {
-                  "type": "show_block",
-                  "block_names": ["name of block"],
-                  "title": "Show Block"
-                },
-                {
-                  "type": "web_url",
-                  "url": "https://rockets.chatfuel.com",
-                  "title": "Visit Website"
-                },
-                {
-                  "url": "https://rockets.chatfuel.com/api/welcome",
-                  "type":"json_plugin_url",
-                  "title":"Postback"
+                  "title":"Get in touch",
+                  "image_url":"https://rockets.chatfuel.com/assets/contact.jpg",
+                  "subtitle":"Feel free to hit us up!",
+                  "buttons":[
+                    {
+                      "type":"phone_number",
+                      "phone_number":"+19268881413",
+                      "title":"Call"
+                    },
+                    {
+                      "type":"element_share"
+                    }
+                  ]
                 }
               ]
             }
