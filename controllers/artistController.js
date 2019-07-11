@@ -39,7 +39,7 @@ exports.sendArtistsByName = (req, res) => {
       });
     });
 
-    return prepare;
+    // return prepare;
 
     return {
       messages: [
