@@ -1,15 +1,14 @@
-const fetchJson = require('../services/call-api');
+const fetchJson = require("../services/call-api");
 
 exports.sendAlbumsByArtist = (req, res) => {
-  const prepareDataToSend = response => {
+  const prepareDataToSend = (response) => {
     const prepare = {
       messages: [
         {
           attachment: {
-            type: 'template',
+            type: "template",
             payload: {
-              template_type: 'generic',
-              image_aspect_ratio: 'square',
+              template_type: "generic",
               elements: []
             }
           }
@@ -21,42 +20,45 @@ exports.sendAlbumsByArtist = (req, res) => {
       return response.error;
     }
 
-    response.data.forEach(item => {
+    for (i = 0; i < 5; i++) {
       prepare.messages[0].attachment.payload.elements.push({
-        title: item.title,
-        image_url: item.cover_xl,
+        title: response.data[i].title,
+        image_url: response.data[i].cover_xl,
         subtitle: `${item.nb_tracks} morceaux, type: ${item.record_type}`,
         buttons: [
           {
-            type: 'web_url',
-            url: item.link,
-            title: 'Voir sur deezer'
+            type: "web_url",
+            url: response.data[i].link,
+            title: "Visiter Website"
+          },
+          {
+            type: "element_share"
           }
         ]
       });
-    });
+    }
 
     return prepare;
   };
 
-  return fetchJson('https://api.deezer.com/search/album?q=' + req.query.q)
-    .then(data => data.json())
-    .then(response => {
+  return fetchJson("https://api.deezer.com/search/album?q=" + req.query.q)
+    .then((data) => data.json())
+    .then((response) => {
       return res.json(prepareDataToSend(response));
     })
-    .catch(err => new Error(err));
+    .catch((err) => new Error(err));
 };
 
 exports.sendAlbumByName = (req, res) => {
-  const prepareDataToSend = response => {
+  const prepareDataToSend = (response) => {
     const prepare = {
       messages: [
         {
           attachment: {
-            type: 'template',
+            type: "template",
             payload: {
-              template_type: 'generic',
-              image_aspect_ratio: 'square',
+              template_type: "generic",
+              image_aspect_ratio: "square",
               elements: []
             }
           }
@@ -68,7 +70,7 @@ exports.sendAlbumByName = (req, res) => {
       return response.error;
     }
 
-    response.data.forEach(item => {
+    response.data.forEach((item) => {
       prepare.messages[0].attachment.payload.elements.push({
         title: item.title,
         image_url: item.cover_xl,
@@ -77,9 +79,9 @@ exports.sendAlbumByName = (req, res) => {
         } morceaux, type: ${item.record_type}`,
         buttons: [
           {
-            type: 'web_url',
+            type: "web_url",
             url: item.link,
-            title: 'Voir sur deezer'
+            title: "Voir sur deezer"
           }
         ]
       });
@@ -88,12 +90,12 @@ exports.sendAlbumByName = (req, res) => {
     return prepare;
   };
 
-  return fetchJson('https://api.deezer.com/search/album?q=' + req.query.q)
-    .then(data => data.json())
-    .then(response => {
+  return fetchJson("https://api.deezer.com/search/album?q=" + req.query.q)
+    .then((data) => data.json())
+    .then((response) => {
       return res.json(prepareDataToSend(response));
     })
-    .catch(err => new Error(err));
+    .catch((err) => new Error(err));
 };
 
 //  const t ={

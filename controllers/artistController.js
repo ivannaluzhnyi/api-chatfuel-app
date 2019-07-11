@@ -2,7 +2,6 @@ const fetchJson = require("../services/call-api");
 
 exports.sendArtistsByName = (req, res) => {
   const prepareDataToSend = (response) => {
-    console.log("response", response);
     const prepare = {
       messages: [
         {
@@ -32,7 +31,7 @@ exports.sendArtistsByName = (req, res) => {
           {
             type: "web_url",
             url: response.data[i].link,
-            title: "Visit Website"
+            title: "Visiter Website"
           },
           {
             type: "element_share"
@@ -41,7 +40,7 @@ exports.sendArtistsByName = (req, res) => {
       });
     }
 
-    return prepare;
+    return response;
   };
 
   return fetchJson("https://api.deezer.com/search/artist?q=" + req.query.q)
