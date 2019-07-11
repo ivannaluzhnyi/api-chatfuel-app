@@ -21,8 +21,13 @@ exports.sendArtistsByName = (req, res) => {
       return response.error;
     }
 
-    for (i = 0; i < 5; i++) {
+    let len  = 0;
 
+    for (i = 0; i < response.data.length ; i++) {
+      if(len === 5){
+        break;
+      }  
+      len++;
       prepare.messages[0].attachment.payload.elements.push({
         title: response.data[i].name,
         image_url: response.data[i].picture_xl,
