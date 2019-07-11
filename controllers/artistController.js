@@ -75,6 +75,21 @@ exports.sendArtistsByName = (req, res) => {
                       "type":"element_share"
                     }
                   ]
+                },
+                {
+                  "title":"Get in touch",
+                  "image_url":"https://rockets.chatfuel.com/assets/contact.jpg",
+                  "subtitle":"Feel free to hit us up!",
+                  "buttons":[
+                    {
+                      "type":"phone_number",
+                      "phone_number":"+19268881413",
+                      "title":"Call"
+                    },
+                    {
+                      "type":"element_share"
+                    }
+                  ]
                 }
               ]
             }
