@@ -17,19 +17,21 @@ exports.sendArtistsByName = (req, res) => {
       ]
     };
 
+
     if (response.error) {
       return response.error;
     }
 
-    response.data.forEach((item) => {
+    for (i = 0; i < 5; i++) {
+
       prepare.messages[0].attachment.payload.elements.push({
-        title: item.name,
-        image_url: item.picture_xl,
-        subtitle: "Feel free to hit us up!",
+        title: response.data[i].name,
+        image_url: response.data[i].picture_xl,
+        subtitle: "Nombre de fan : " + response.data[i].nb_fan,
         buttons: [
           {
             type: "web_url",
-            url: "item.link",
+            url: response.data[i].link,
             title: "Visit Website"
           },
           {
@@ -37,40 +39,9 @@ exports.sendArtistsByName = (req, res) => {
           }
         ]
       });
-    });
+    }
 
-    // return prepare;
-
-    return {
-      messages: [
-        {
-          attachment: {
-            type: "template",
-            payload: {
-              template_type: "generic",
-              elements: [
-                {
-                  title: "Eminem",
-                  image_url:
-                    "https://cdns-images.dzcdn.net/images/artist/0707267475580b1b82f4da20a1b295c6/1000x1000-000000-80-0-0.jpg",
-                  subtitle: "Feel free to hit us up!",
-                  buttons: [
-                    {
-                      type: "web_url",
-                      url: "item.link",
-                      title: "Visit Website"
-                    },
-                    {
-                      type: "element_share"
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        }
-      ]
-    };
+    return prepare;
   };
 
   return fetchJson("https://api.deezer.com/search/artist?q=" + req.query.q)
