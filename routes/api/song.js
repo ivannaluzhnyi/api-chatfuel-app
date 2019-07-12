@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const artistController = require('../../controllers/artistController');
+const songController = require('../../controllers/songController');
 // return a test
 router.get('/',songController.sendSongByName );
 
