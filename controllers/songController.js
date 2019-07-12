@@ -23,20 +23,20 @@ exports.sendSongByName = (req, res) => {
 
     let len  = 0;
 
-    for (i = 0; i < response.data.length ; i++) {
+    for (i = 0; i < response.message.body.track_list.length ; i++) {
       if(len === 10){
         break;
       }  
       len++;
       prepare.messages[0].attachment.payload.elements.push({
-        title: response.data[i].name,
-        image_url: response.data[i].picture_xl,
-        subtitle: "Nombre de fan : " + response.data[i].nb_fan,
+        title: response.message.body.track_list[i].track.track_name,
+        image_url:'',
+        subtitle: "Album : " + response.message.body.track_list[i].track.album_name + ", Artiste : "+ response.message.body.track_list[i].track.artist_name,
         buttons: [
           {
             type: "web_url",
-            url: response.data[i].link,
-            title: "Visiter Website"
+            url: response.message.body.track_list[i].track.track_share_url,
+            title: "Voire morceau"
           },
           {
             type: "element_share"
@@ -45,7 +45,7 @@ exports.sendSongByName = (req, res) => {
       });
     }
 
-    return response;
+    return prepare;
   };
 
   return fetchJson("track.search?q_track=" + req.query.q)

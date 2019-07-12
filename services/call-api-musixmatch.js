@@ -15,7 +15,7 @@ function fetchJsonSongkick(url_q) {
   );
 
   return fetch(
-    `https://api.songkick.com/api/3.0/${url_q}&apikey=${API_KEY}`,
+    `http://api.musixmatch.com/ws/1.1/${url_q}&apikey=${API_KEY}`,
     options
   );
 }
