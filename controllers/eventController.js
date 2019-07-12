@@ -40,7 +40,7 @@ const prepareDataToSend = (response, artist) => {
       let len = 0;
 
       for (i = 0; i < response.resultsPage.results.event.length; i++) {
-        if (len === 20) {
+        if (len === 15) {
           break;
         }
 
