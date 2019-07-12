@@ -1,7 +1,61 @@
-const fetchJson = require("../services/call-api");
+const fetchJsonMX = require("../services/call-api-musixmatch");
+
+const getIdOfArtist = require("../utils/helper");
 
 exports.sendAlbumsByArtist = (req, res) => {
-  const prepareDataToSend = (response) => {
+  const prepareDataToSend = (responseAlbums) => {
+    let prepare = {
+      messages: []
+    };
+
+    if (responseAlbums.error) {
+      return responseAlbums.error;
+    }
+
+    let len = 0;
+
+    for (i = 0; i < responseAlbums.message.body.album_list.length; i++) {
+      if (len === 10) {
+        break;
+      }
+      len++;
+      prepare.messages.push({
+        text:
+          "✅ " +
+          responseAlbums.message.body.album_list[i].album.album_name +
+          "\n " +
+          "Rating : " +
+          responseAlbums.message.body.album_list[i].album.album_rating +
+          "\n Date de release : " +
+          responseAlbums.message.body.album_list[i].album.album_release_date +
+          " \n Genres : " +
+          prepareGenre(
+            responseAlbums.message.body.album_list[i].album.primary_genres
+              .music_genre_list
+          )
+      });
+    }
+
+    return prepare;
+  };
+
+  return fetchJsonMX("artist.search?q_artist=" + req.query.q)
+    .then((data) => data.json())
+    .then((response) => {
+      return fetchJsonMX(
+        `artist.albums.get?artist_id=${
+          response.message.body.artist_list[0].artist.artist_id
+        }&s_release_date=desc`
+      )
+        .then((data) => data.json())
+        .then((responseAlbums) => {
+          return res.json(prepareDataToSend(responseAlbums));
+        });
+    });
+};
+
+exports.sendAlbumByName = (req, res) => {
+  const prepareDataToSend = (responseAlbums) => {
     const prepare = {
       messages: [
         {
@@ -16,21 +70,34 @@ exports.sendAlbumsByArtist = (req, res) => {
       ]
     };
 
-    if (response.error) {
-      return response.error;
+    if (responseAlbums.error) {
+      return responseAlbums.error;
     }
 
-    // for (i = 0; i < 5; i++) {
+    let len = 0;
+
+    // for (i = 0; i < responseAlbums.data.length; i++) {
+    //   if (len === 10) {
+    //     break;
+    //   }
+    //   len++;
     //   prepare.messages[0].attachment.payload.elements.push({
-    //     title: response.data[i].title,
-    //     image_url: response.data[i].cover_xl,
-    //     subtitle: `Artiste:${item.artist.name} ${
-    //       item.nb_tracks
-    //     } morceaux, type: ${item.record_type}`,
+    //     title: responseAlbums.message.body.album_list[i].album.album_name,
+    //     image_url: "",
+    //     subtitle:
+    //       "Rating : " +
+    //       responseAlbums.message.body.album_list[i].album.album_rating +
+    //       "\n Date de release : " +
+    //       responseAlbums.message.body.album_list[i].album.album_release_date +
+    //       " \n Genres : " +
+    //       prepareGenre(
+    //         responseAlbums.message.body.album_list[i].album.primary_genres
+    //           .music_genre_list
+    //       ),
     //     buttons: [
     //       {
     //         type: "web_url",
-    //         url: response.data[i].link,
+    //         url: responseAlbums.message.body.album_list[i].album.link,
     //         title: "Visiter Website"
     //       },
     //       {
@@ -40,64 +107,8 @@ exports.sendAlbumsByArtist = (req, res) => {
     //   });
     // }
 
-    // return prepare;
-    return response;
-  };
-
-  return fetchJson("https://api.deezer.com/search/album?q=" + req.query.q)
-    .then((data) => data.json())
-    .then((response) => {
-      return res.json(prepareDataToSend(response));
-    });
-};
-
-exports.sendAlbumByName = (req, res) => {
-  const prepareDataToSend = (response) => {
-    const prepare = {
-      messages: [
-        {
-          attachment: {
-            type: "template",
-            payload: {
-              template_type: "generic",
-              elements: []
-            }
-          }
-        }
-      ]
-    };
-
-    if (response.error) {
-      return response.error;
-    }
-
-    let len  = 0;
-
-    for (i = 0; i < response.data.length ; i++) {
-      if(len === 10){
-        break;
-      }  
-      len++;
-      prepare.messages[0].attachment.payload.elements.push({
-        title: response.data[i].name,
-        image_url: response.data[i].picture_xl,
-        subtitle: "Nombre de fan : " + response.data[i].nb_fan,
-        buttons: [
-          {
-            type: "web_url",
-            url: response.data[i].link,
-            title: "Visiter Website"
-          },
-          {
-            type: "element_share"
-          }
-        ]
-      });
-    }
-
     return prepare;
   };
-  
 
   return fetchJson("https://api.deezer.com/search/album?q=" + req.query.q)
     .then((data) => data.json())
@@ -105,6 +116,14 @@ exports.sendAlbumByName = (req, res) => {
       return res.json(prepareDataToSend(response));
     })
     .catch((err) => new Error(err));
+};
+
+const prepareGenre = (arr) => {
+  let genres = "";
+  arr.forEach((element) => {
+    genres = genres + " - " + element.music_genre.music_genre_name + "\n";
+  });
+  return genres;
 };
 
 //  const t ={
