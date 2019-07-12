@@ -7,6 +7,11 @@ const getFormattedDate = date => {
   return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
 };
 
+const getIdOfArtist = responseAlbum => {
+  return responseAlbum.data[0].id;
+}
+
 module.exports = {
-  getFormattedDate
+  getFormattedDate,
+  getIdOfArtist,
 };

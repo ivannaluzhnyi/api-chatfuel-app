@@ -1,5 +1,4 @@
 const fetchJson = require("../services/call-api");
-// const DZ = require("node-deezer");
 
 exports.sendAlbumsByArtist = (req, res) => {
   const prepareDataToSend = (response) => {
@@ -42,34 +41,6 @@ exports.sendAlbumsByArtist = (req, res) => {
     // }
 
     // return prepare;
-
-    // const deezer = new DZ();
-
-    // // Now use node-deezer to generate the the link where you can redirect
-    // // your users to allow your app to access her/his Deezer account
-    // const appId = "359644"; // from developers.deezer.com
-    // const appSecret = "ed69353bfd2ff04df82fb8f44deba9b0"; // from developers.deezer.com
-    // const redirectUrl = "http://localhost:5000/deezerCallback"; // somewhere in your app, see below
-    // const loginUrl = deezer.getLoginUrl(appId, redirectUrl);
-
-
-    // deezer.createSession(appId, appSecret, code, function(err, result) {
-    //   console.log('result => ',result);
-
-    //   deezer.request(
-    //     result.accessToken,
-    //     {
-    //       resource: "search/artist",
-    //       method: "get",
-    //       fields: { q: "eminem" }
-    //     },
-    //     function done(err, results) {
-    //       if (err) throw err;
-    //       console.log('results done => ',results);
-    //     }
-    //   );
-    // });
-
     return response;
   };
 
@@ -100,13 +71,17 @@ exports.sendAlbumByName = (req, res) => {
       return response.error;
     }
 
-    for (i = 0; i < 5; i++) {
+    let len  = 0;
+
+    for (i = 0; i < response.data.length ; i++) {
+      if(len === 10){
+        break;
+      }  
+      len++;
       prepare.messages[0].attachment.payload.elements.push({
-        title: response.data[i].title,
-        image_url: response.data[i].cover_xl,
-        subtitle: `Artiste:${item.artist.name} ${
-          item.nb_tracks
-        } morceaux, type: ${item.record_type}`,
+        title: response.data[i].name,
+        image_url: response.data[i].picture_xl,
+        subtitle: "Nombre de fan : " + response.data[i].nb_fan,
         buttons: [
           {
             type: "web_url",
@@ -122,6 +97,7 @@ exports.sendAlbumByName = (req, res) => {
 
     return prepare;
   };
+  
 
   return fetchJson("https://api.deezer.com/search/album?q=" + req.query.q)
     .then((data) => data.json())
