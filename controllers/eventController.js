@@ -37,17 +37,30 @@ const prepareDataToSend = (response) => {
         ]
       };
     } else {
-      response.resultsPage.results.event.forEach((event) => {
-        const artists = prepareArtist(event.performance);
+      let len = 0;
+
+      for (i = 0; i < response.resultsPage.results.event.length; i++) {
+        if (len === 10) {
+          break;
+        }
+
+        const artists = prepareArtist(
+          response.resultsPage.results.event[i].performance
+        );
         prepare.messages.push({
-          text: `✅ _*${event.type} - ${
-            event.displayName
-          }*_,\n📅 le ${getFormattedDate(event.start.date)}  \n🗺️ à ${
-            event.venue.displayName
-          }, ${event.location.city} \n👨‍🎤Artistes: \n${artists}      
-          `
+          text: `✅ _*${response.resultsPage.results.event[i].type} - ${
+            response.resultsPage.results.event[i].displayName
+          }*_,\n📅 le ${getFormattedDate(
+            response.resultsPage.results.event[i].start.date
+          )}  \n🗺️ à ${
+            response.resultsPage.results.event[i].venue.displayName
+          }, ${
+            response.resultsPage.results.event[i].location.city
+          } \n👨‍🎤Artistes: \n${artists}      
+        `
         });
-      });
+        len++;
+      }
     }
   } else {
     prepare = {

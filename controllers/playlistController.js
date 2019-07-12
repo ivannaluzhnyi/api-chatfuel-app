@@ -39,9 +39,9 @@ const prepareDataToSend = (response) => {
       title: response.data[i].title,
       image_url: response.data[i].picture_xl,
       subtitle:
-        "Nombre de morceaux : " +
+        "Nombre de morceaux : *" +
         response.data[i].nb_tracks +
-        ", créé le  : " +
+        "*, créé le  : " +
         getFormattedDate(response.data[i].creation_date),
       buttons: [
         {
