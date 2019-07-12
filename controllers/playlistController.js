@@ -47,7 +47,7 @@ const prepareDataToSend = (response) => {
         {
           type: "web_url",
           url: response.data[i].link,
-          title: "Visiter Website"
+          title: "Voire le playlist sur Deezer"
         },
         {
           type: "element_share"
