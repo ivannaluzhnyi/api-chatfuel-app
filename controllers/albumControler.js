@@ -21,12 +21,12 @@ exports.sendAlbumsByArtist = (req, res) => {
       len++;
       prepare.messages.push({
         text:
-          "✅ " +
+          "✅ _*" +
           responseAlbums.message.body.album_list[i].album.album_name +
-          "\n " +
+          "*_\n " +
           "Rating : " +
           responseAlbums.message.body.album_list[i].album.album_rating +
-          "\n Date de release : " +
+          "\n 📅 Date de release : " +
           responseAlbums.message.body.album_list[i].album.album_release_date +
           " \n Genres : " +
           prepareGenre(
