@@ -9,7 +9,7 @@ exports.sendEventsLocationClient = (req, res) => {
   )
     .then((data) => data.json())
     .then((response) => {
-      return res.json(prepareDataToSend(response, false));
+      return res.json(prepareDataToSend(response));
     });
 };
 
@@ -19,11 +19,11 @@ exports.sendUpcomingEventsByArtistName = (req, res) => {
   )
     .then((data) => data.json())
     .then((response) => {
-      return res.json(prepareDataToSend(response, true));
+      return res.json(prepareDataToSend(response));
     });
 };
 
-const prepareDataToSend = (response, artist) => {
+const prepareDataToSend = (response) => {
   let prepare = {
     messages: []
   };
@@ -39,8 +39,9 @@ const prepareDataToSend = (response, artist) => {
     } else {
       let len = 0;
 
+
       for (i = 0; i < response.resultsPage.results.event.length; i++) {
-        if (len === 15) {
+        if (len === 10) {
           break;
         }
 
