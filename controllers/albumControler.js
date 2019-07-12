@@ -11,7 +11,7 @@ exports.sendAlbumsByArtist = (req, res) => {
             payload: {
               template_type: "generic",
               elements: []
-            }
+            }     
           }
         }
       ]
@@ -45,7 +45,6 @@ exports.sendAlbumsByArtist = (req, res) => {
     return response;
   };
 
-  console.log('test ===> ',req.query.q);
 
 
   return fetchJson("https://api.deezer.com/search/album?q=" + req.query.q)

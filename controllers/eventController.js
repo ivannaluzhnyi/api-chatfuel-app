@@ -1,5 +1,5 @@
-const fetchJsonSongkick = require('../services/call-api-songkick');
-const { getFormattedDate } = require('../utils/helper');
+const fetchJsonSongkick = require("../services/call-api-songkick");
+const { getFormattedDate } = require("../utils/helper");
 
 exports.sendEventsLocationClient = (req, res) => {
   return fetchJsonSongkick(
@@ -7,8 +7,8 @@ exports.sendEventsLocationClient = (req, res) => {
       req.query.longitude
     }&per_page=${req.query.per_page}`
   )
-    .then(data => data.json())
-    .then(response => {
+    .then((data) => data.json())
+    .then((response) => {
       return res.json(prepareDataToSend(response));
     });
 };
@@ -17,33 +17,18 @@ exports.sendUpcomingEventsByArtistName = (req, res) => {
   return fetchJsonSongkick(
     `events.json?artist_name=${req.query.artist_search_events}`
   )
-    .then(data => data.json())
-    .then(response => {
+    .then((data) => data.json())
+    .then((response) => {
       return res.json(prepareDataToSend(response));
     });
 };
 
-const prepareDataToSend = response => {
-  let prepare = {};
-
-  if (response.resultsPage.status === 'ok') {
-    prepare = {
-      messages: []
-    };
-
-    response.resultsPage.results.event.forEach(event => {
-      const artists = prepareArtist(event.performance);
-      prepare.messages.push({
-        text: `✅ _*${event.type} - ${
-          event.displayName
-        }*_,\n📅 le ${getFormattedDate(event.start.date)}  \n🗺️ à ${
-          event.venue.displayName
-        }, ${event.location.city} \n👨‍🎤Artistes: \n${artists}      
-        `
-      });
-    });
-
-    if (response.resultsPage.results.event.length === 0) {
+const prepareDataToSend = (response) => {
+  let prepare = {
+    messages: []
+  };
+  if (response.resultsPage.status === "ok") {
+    if (!response.resultsPage.results.event) {
       prepare = {
         messages: [
           {
@@ -51,12 +36,24 @@ const prepareDataToSend = response => {
           }
         ]
       };
+    } else {
+      response.resultsPage.results.event.forEach((event) => {
+        const artists = prepareArtist(event.performance);
+        prepare.messages.push({
+          text: `✅ _*${event.type} - ${
+            event.displayName
+          }*_,\n📅 le ${getFormattedDate(event.start.date)}  \n🗺️ à ${
+            event.venue.displayName
+          }, ${event.location.city} \n👨‍🎤Artistes: \n${artists}      
+          `
+        });
+      });
     }
   } else {
     prepare = {
       messages: [
         {
-          text: 'Service indisponible...'
+          text: "Service indisponible..."
         }
       ]
     };
@@ -65,10 +62,10 @@ const prepareDataToSend = response => {
   return prepare;
 };
 
-const prepareArtist = arr => {
-  let artists = '';
-  arr.forEach(element => {
-    artists = artists + ' - ' + element.displayName + '\n';
+const prepareArtist = (arr) => {
+  let artists = "";
+  arr.forEach((element) => {
+    artists = artists + " - " + element.displayName + "\n";
   });
   return artists;
 };
