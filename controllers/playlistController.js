@@ -1,22 +1,22 @@
-const fetchJson = require('../services/call-api');
+const fetchJson = require("../services/call-api");
+const { getFormattedDate } = require("../utils/helper");
 
 exports.sendPlaylistByName = (req, res) => {
-  return fetchJson('https://api.deezer.com/search/playlist?q=' + req.query.q)
-    .then(data => data.json())
-    .then(response => {
+  return fetchJson("https://api.deezer.com/search/playlist?q=" + req.query.q)
+    .then((data) => data.json())
+    .then((response) => {
       return res.send(prepareDataToSend(response));
     });
 };
 
-const prepareDataToSend = response => {
+const prepareDataToSend = (response) => {
   const prepare = {
     messages: [
       {
         attachment: {
-          type: 'template',
+          type: "template",
           payload: {
-            template_type: 'generic',
-            image_aspect_ratio: 'square',
+            template_type: "generic",
             elements: []
           }
         }
@@ -28,20 +28,33 @@ const prepareDataToSend = response => {
     return response.error;
   }
 
-  response.data.forEach(item => {
+  let len = 0;
+
+  for (i = 0; i < response.data.length; i++) {
+    if (len === 10) {
+      break;
+    }
+    len++;
     prepare.messages[0].attachment.payload.elements.push({
-      title: item.name,
-      image_url: item.picture_xl,
-      subtitle: 'Size: M',
+      title: response.data[i].title,
+      image_url: response.data[i].picture_xl,
+      subtitle:
+        "Nombre de morceaux : " +
+        response.data[i].nb_tracks +
+        ", créé le  : " +
+        getFormattedDate(response.data[i].creation_date),
       buttons: [
         {
-          type: 'web_url',
-          url: item.link,
-          title: 'Voir le playlist sur deezer'
+          type: "web_url",
+          url: response.data[i].link,
+          title: "Visiter Website"
+        },
+        {
+          type: "element_share"
         }
       ]
     });
-  });
+  }
 
   return prepare;
 };
