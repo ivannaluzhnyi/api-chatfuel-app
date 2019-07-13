@@ -36,7 +36,7 @@ exports.sendSongByName = (req, res) => {
           {
             type: "web_url",
             url: response.message.body.track_list[i].track.track_share_url,
-            title: "Voire morceau"
+            title: "Voir le morceau"
           },
           {
             type: "element_share"

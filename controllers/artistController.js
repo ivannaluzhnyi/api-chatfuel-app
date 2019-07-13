@@ -36,7 +36,7 @@ exports.sendArtistsByName = (req, res) => {
           {
             type: "web_url",
             url: response.data[i].link,
-            title: "Visiter Website"
+            title: "Visiter le site internet"
           },
           {
             type: "element_share"

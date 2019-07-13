@@ -1,6 +1,5 @@
 const fetchJsonMX = require("../services/call-api-musixmatch");
 
-const getIdOfArtist = require("../utils/helper");
 
 exports.sendAlbumsByArtist = (req, res) => {
   const prepareDataToSend = (responseAlbums) => {
@@ -54,69 +53,6 @@ exports.sendAlbumsByArtist = (req, res) => {
     });
 };
 
-exports.sendAlbumByName = (req, res) => {
-  const prepareDataToSend = (responseAlbums) => {
-    const prepare = {
-      messages: [
-        {
-          attachment: {
-            type: "template",
-            payload: {
-              template_type: "generic",
-              elements: []
-            }
-          }
-        }
-      ]
-    };
-
-    if (responseAlbums.error) {
-      return responseAlbums.error;
-    }
-
-    let len = 0;
-
-    // for (i = 0; i < responseAlbums.data.length; i++) {
-    //   if (len === 10) {
-    //     break;
-    //   }
-    //   len++;
-    //   prepare.messages[0].attachment.payload.elements.push({
-    //     title: responseAlbums.message.body.album_list[i].album.album_name,
-    //     image_url: "",
-    //     subtitle:
-    //       "Rating : " +
-    //       responseAlbums.message.body.album_list[i].album.album_rating +
-    //       "\n Date de release : " +
-    //       responseAlbums.message.body.album_list[i].album.album_release_date +
-    //       " \n Genres : " +
-    //       prepareGenre(
-    //         responseAlbums.message.body.album_list[i].album.primary_genres
-    //           .music_genre_list
-    //       ),
-    //     buttons: [
-    //       {
-    //         type: "web_url",
-    //         url: responseAlbums.message.body.album_list[i].album.link,
-    //         title: "Visiter Website"
-    //       },
-    //       {
-    //         type: "element_share"
-    //       }
-    //     ]
-    //   });
-    // }
-
-    return prepare;
-  };
-
-  return fetchJson("https://api.deezer.com/search/album?q=" + req.query.q)
-    .then((data) => data.json())
-    .then((response) => {
-      return res.json(prepareDataToSend(response));
-    })
-    .catch((err) => new Error(err));
-};
 
 const prepareGenre = (arr) => {
   let genres = "";
