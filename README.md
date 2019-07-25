@@ -1,4 +1,4 @@
-# app nodejs for send data to chatbot chatfuel (api) -SongFolio
+# Send data to chatbot chatfuel (API) -SongFolio
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
