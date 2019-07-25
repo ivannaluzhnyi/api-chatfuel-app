@@ -1,15 +1,15 @@
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
-const API_KEY = 'LbYnp2DGKcm8NBv5vrTh0FCiUDNsagyR';
+require("es6-promise").polyfill();
+require("isomorphic-fetch");
+const API_KEY = process.env.API_KEY_GIPHY;
 
 function fetchJsonGiphy(query, limit) {
   const options = {
-    method: 'get'
+    method: "get"
   };
   options.headers = Object.assign(
     {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json"
     },
     options.headers
   );

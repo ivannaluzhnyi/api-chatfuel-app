@@ -1,15 +1,15 @@
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
-const API_KEY = 'LhH3DykKbd4YMtow';
+require("es6-promise").polyfill();
+require("isomorphic-fetch");
+const API_KEY = process.env.API_KEY_SONGKICK;
 
 function fetchJsonSongkick(url_q) {
   const options = {
-    method: 'get'
+    method: "get"
   };
   options.headers = Object.assign(
     {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json"
     },
     options.headers
   );
